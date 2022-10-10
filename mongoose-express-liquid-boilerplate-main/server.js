@@ -28,7 +28,7 @@ middleware(app)
 // app.use, when we register a route, needs two arguments
 // the first, is the base url endpoint, the second is the file to use
 
-app.use('/fruits', FruitRouter)
+app.use('/fish', FishRouter)
 app.use('/comments', commentRouter)
 app.use('/users', UserRouter)
 
