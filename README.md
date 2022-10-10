@@ -5,7 +5,7 @@ The application that I will be creating is a fishing app.
 
 
  # Overview
- My app will consist of the best kinds of fish to go out and catch in the top 10-15 states in the United States. It will also give the user the capability to check the weather the day of which they want to go out and cast!
+ My app will consist of the best kinds of fish to go out and catch in the one and only Tampa-Bay, FLorida. It will also give the user the capability to check the weather the day of which they want to go out and cast!
 
  As the creator, I will build a platform that makes it very easy and simple for anyone to not just browse through the app but get wonderful information about the fish itself.
 
@@ -48,4 +48,4 @@ The application that I will be creating is a fishing app.
 
 # Entity Relationship Diagrams (ERD)
 
-![myImg](Erm.png)
+![myImg](upd2.png)
