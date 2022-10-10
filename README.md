@@ -33,7 +33,7 @@ The application that I will be creating is a fishing app.
  # Where My Information is coming from
  - Weather API
  - will create a 10-15 seeds
- example: http://dataservice.accuweather.com/locations/v1/adminareas/840
+ example: https://goweather.herokuapp.com/weather/(city/State)
 
  #  Schedule for the week
  - I will creating 10-15 seed which i will be doing 3-4 of them everyday and start connecting everyhting together
