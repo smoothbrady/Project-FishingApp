@@ -4,11 +4,16 @@
 require("dotenv").config() // make env variables available
 const express = require("express")
 const middleware = require('./utils/middleware')
-const FishRouter = require('./controllers/fishcontrollers')
-const UserRouter = require('./controllers/userControllers')
+const FishRouter = require('./controllers/fish')
+const UserRouter = require('./controllers/user')
 const Path = require("path")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
+
+//////////////////////////////
+// Models 
+//////////////////////////////
+const Fish = require('./models/fish')
 
 //////////////////////////////
 // Middleware + App Object  //
@@ -29,7 +34,6 @@ middleware(app)
 // the first, is the base url endpoint, the second is the file to use
 
 app.use('/fish', FishRouter)
-app.use('/comments', commentRouter)
 app.use('/users', UserRouter)
 
 // this renders an error page, gets the error from a url request query

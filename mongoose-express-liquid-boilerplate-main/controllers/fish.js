@@ -1,6 +1,6 @@
 // Import Dependencies
 const express = require('express')
-const Example = require('../models/example')
+const Fish = require('../models/fish')
 
 // Create router
 const router = express.Router()
