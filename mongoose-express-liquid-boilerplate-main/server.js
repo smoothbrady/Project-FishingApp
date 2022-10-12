@@ -6,6 +6,7 @@ const express = require("express")
 const middleware = require('./utils/middleware')
 const FishRouter = require('./controllers/fish')
 const UserRouter = require('./controllers/user')
+const CommentRouter = require('./controllers/comment')
 const Path = require("path")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
@@ -20,11 +21,12 @@ const Fish = require('./models/fish')
 //////////////////////////////
 const app = require("liquid-express-views")(express())
 
+
+/////////////////////////////////////////////
+// Middleware
+/////////////////////////////////////////////
 middleware(app)
 
-////////////////////
-//    Routes      //
-////////////////////
 
 /////////////////////////////////////////////
 // Register our Routes
@@ -38,15 +40,15 @@ app.use('/users', UserRouter)
 
 // this renders an error page, gets the error from a url request query
 app.get('/', (req, res) => {
-    const { username, userId, loggedIn } = req.session
+	const { username, userId, loggedIn } = req.session
 	res.render('index.liquid', { loggedIn, username, userId })
 })
 
 app.get('/error', (req, res) => {
 	// get session variables
-	const error = req.query.error || 'This Page Does Not Exist'
     const { username, loggedIn, userId } = req.session
-
+	const error = req.query.error || 'This Page Does Not Exist'
+	
 	res.render('error.liquid', { error, username, loggedIn, userId })
 })
 
@@ -55,7 +57,6 @@ app.get('/error', (req, res) => {
 app.all('*', (req, res) => {
 	res.redirect('/error')
 })
-
 
 //////////////////////////////
 //      App Listener        //
