@@ -15,6 +15,7 @@ const router = express.Router()
 
 // GET to render the signup form
 router.get('/signup', (req, res) => {
+	// renders point of liquid
 	res.render('auth/signup')
 })
 
@@ -29,6 +30,7 @@ router.post('/signup', async (req, res) => {
 	User.create(req.body)
 		// if created successfully redirect to login
 		.then((user) => {
+			// point of liquid
 			res.redirect('/auth/login')
 		})
 		// if an error occurs, send err

@@ -7,6 +7,7 @@ const middleware = require('./utils/middleware')
 const FishRouter = require('./controllers/fish')
 const UserRouter = require('./controllers/user')
 const CommentRouter = require('./controllers/comment')
+const WeatherRouter = require('./controllers/weather')
 const Path = require("path")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
@@ -37,13 +38,14 @@ middleware(app)
 
 app.use('/fish', FishRouter)
 app.use('/users', UserRouter)
+app.use('/', WeatherRouter)
 
-// this renders an error page, gets the error from a url request query
 app.get('/', (req, res) => {
 	const { username, userId, loggedIn } = req.session
 	res.render('index.liquid', { loggedIn, username, userId })
 })
 
+// this renders an error page, gets the error from a url request query
 app.get('/error', (req, res) => {
 	// get session variables
     const { username, loggedIn, userId } = req.session
