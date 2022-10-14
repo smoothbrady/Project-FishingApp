@@ -6,8 +6,8 @@ const express = require("express")
 const middleware = require('./utils/middleware')
 const FishRouter = require('./controllers/fish')
 const UserRouter = require('./controllers/user')
-const CommentRouter = require('./controllers/comment')
-const WeatherRouter = require('./controllers/weather')
+// const CommentRouter = require('./controllers/comment')
+// const WeatherRouter = require('./controllers/weather')
 const Path = require("path")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
@@ -38,7 +38,7 @@ middleware(app)
 
 app.use('/fish', FishRouter)
 app.use('/users', UserRouter)
-app.use('/', WeatherRouter)
+// app.use('/', WeatherRouter)
 
 app.get('/', (req, res) => {
 	const { username, userId, loggedIn } = req.session

@@ -1,0 +1,64 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+<div class="container-md">
+  <article>
+    <h2>{{fish.name}}
+    </h2>
+    <h4>
+      {% if fish.readyToCatch %}
+        Hungry and Ready
+      {% else %}
+        Not Hungry, Not ready
+      {% endif %}
+    </h4>
+    <h4>The body of water the fish live in:
+      {{fish.bodyofwater}}
+    </h4>
+    <div class="colorBox" style="background-color: {{fish.bodyofwater}}"></div>
+    {% if fruit.owner == userId %}
+      <div class="btn-group">
+        {%- comment -%}
+          first button will send us to the edit page
+        {%- endcomment -%}
+        <a class="btn btn-outline-primary" href="/fishs/edit/{{fish.id}}">Edit</a>
+        {%- comment -%}
+          the second button(which will actually be a form, will send a DELETE request)
+        {%- endcomment -%}
+        <form action="/fishs/{{fish.id}}?_method=DELETE" method="POST">
+          <input class="btn btn-outline-danger" type="submit" value="Delete">
+        </form>
+      </div>
+    {% endif %}
+  </article>
+  <hr>
+  <h4>comments</h4>
+  <hr>
+  {% if loggedIn %}
+    <div class="col-md-6">
+      <form action="/comments/{{fish.id}}" method="POST">
+        <fieldset>
+          <legend>Add comment or Review</legend>
+          <label class="form-label">comment:</label>
+          <input class="form-control mb-1" type="text" placeholder="enter your comment..." name="note" required>
+        </fieldset>
+        <input class="btn btn-outline-success" type="submit" value="add comment">
+      </form>
+    </div>
+  {% else %}
+    <div class="col-md-6">
+      <small>You must have an account and logged in before commenting...</small>
+    </div>
+  {% endif %}
+  <hr>
+  {% if fish.comments.length > 0%}
+    <div class="container-sm justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        {% for comment in fish.comments %}
+          {% render '../comment.liquid', comment: comment, userId: userId, fish: fish %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <small>have not commented yet...</small>
+  {% endif %}
+</div>>>

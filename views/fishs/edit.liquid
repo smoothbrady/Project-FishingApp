@@ -1,0 +1,23 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  <div class="container-sm">
+    <form action="/fish/{{fish.id}}?_method=put" method="POST">
+      <fieldset>
+        <legend>Create New Fish</legend>
+        <label class="form-label">Name:
+        </label>
+        <input type="text" name="name" placeholder="What is the name of your fish?" value="{{ fish.name }}" class="form-control">
+        <label class="form-label">Body Of Water:</label>
+        <input type="text" name="body of water" placeholder="What is the body of water your fish lives in?" value="{{ fish.bodyofwater }}" class="form-control">
+        <label class="form-label">Amount Caught:</label>
+        <input type="number" name="amount caught" value="{{ fish.amountcaught }}" class="form-control">
+        <label class="form-label">Ready To Catch:</label>
+        <input type="checkbox" name="ready to catch" class="form-check-input"
+          {% if fish.readytocatch %}
+          checked
+          {% endif %}>
+      </fieldset>
+      <input type="submit" value="Edit Example" class="btn btn-outline-success">
+    </form>
+  </div>
+{% endblock %}}}

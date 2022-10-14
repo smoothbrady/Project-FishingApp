@@ -1,36 +1,9 @@
-{% layout "layout.liquid" %}
+{% layout 'layout.liquid' %}
 {% block content %}
-
-  <h1>Welcome To The Fish App!</h1>
+  <h1 class="display-4">Welcome To The Fish App!</h1>
+  <p>This app allows you to guide the best fish to catch as well as add your own!</p>
   <div class="btn-group btn-group-lg">
     <a href="/users/signup" class="btn btn-success">Sign Up</a>
     <a href="/users/login" class="btn btn-success">Login</a>
   </div>
-  <div class="row">
-    <div class="col-8"></div>
-    <div class="col-4">
-      <div class="row">
-        {% for forecast in weather %}
-          <div class="card col-12">
-            <h5 class="card-header">{{ forecast.Date }}
-            </h5>
-            <div class="card-body">
-              <h5 class="card-title">
-                Weather:
-                {{ forecast.Day.IconPhrase }}
-              </h5>
-              <p class="card-text">
-                Temperature:
-                {{ forecast.Temperature.Maximum.Value }}
-              </p>
-              <p class="card-text">
-                Amount:
-                {{ example.amount }}
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-{% endblock %}}}}}}}}}}}}}}}}}}}}}}}}
+{% endblock %}}}}}

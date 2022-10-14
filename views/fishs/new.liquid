@@ -1,0 +1,20 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  <div class="container-sm">
+    <form action="/examples" method="POST">
+      <fieldset>
+        <legend>Create New Fish</legend>
+        <label class="form-label">Name:
+        </label>
+        <input type="text" name="name" placeholder="What is the name of your fish?" class="form-control">
+        <label class="form-label">Body Of Water:</label>
+        <input type="text" name="body of water" placeholder="What is the body of water your fish lives in?" class="form-control">
+        <label class="form-label">Amount Caught:</label>
+        <input type="number" name="amount caught" class="form-control">
+        <label class="form-label">Ready To Catch:</label>
+        <input type="checkbox" name="Ready To Catch" class="form-check-input">
+      </fieldset>
+      <input type="submit" value="Create New Fish" class="btn btn-outline-success">
+    </form>
+  </div>
+{% endblock %}}
