@@ -2,9 +2,43 @@
 {% block content %}
 
   <h1>All the fish!</h1>
-  <div class="row">
-    <div class="col-8"></div>
-    <div class="col-4">
+  <div class="row" id="mainContentRow">
+    <div class="col-8" id="fishContentContainer">
+       <div class="card h-100">
+            <div class="row" id="fishCardIndex">
+                {% for oneFish in fish %}
+                {{ oneFish }}
+                <div class="card" style="width: 20rem;">
+                    <h5 class="card-header">{{fish.name}}
+                    </h5>
+                    <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">
+                            {% if fish.readyToCatch %}
+                            Hungry
+                            {% else %}
+                            Not Hungry
+                            {% endif %}
+                        </h5>
+                        <p class="card-text">The body of water of this
+                            {{fish.name}}
+                            is
+                            {{fish.bodyofwater}}
+                        </p>
+                        </div>
+                    </div>
+                    <div class="colorBox" style="background-color: {{fish.color}}"></div>
+                    <a class="btn btn-outline-info" href="/fishs/{{fish.id}}">
+                        View
+                        {{fish.name}}
+                    </a>
+                    </div>
+                </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-4" id="weatherContentContainer">
       <div class="row">
         {% for forecast in weather %}
           <div class="card col-12">
@@ -29,4 +63,4 @@
       </div>
     </div>
   </div>
-{% endblock %}}
+{% endblock %}}}

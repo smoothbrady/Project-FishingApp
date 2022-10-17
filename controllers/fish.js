@@ -39,9 +39,13 @@ router.get('/', (req, res) => {
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
-	Fish.find({ owner: userId })
+	Fish.find({ owner: req.session.userId })
 		.then(fishs => {
-			res.render('fishs/index', { fish, username, loggedIn })
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
+			const userId = req.session.userId
+
+			res.render('fishs/index', { fishs, username, loggedIn, userId })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -61,7 +65,7 @@ router.post('/', (req, res) => {
 	req.body.owner = req.session.userId
 	console.log('this was returned from create', fish)
 	Fish.create(req.body)
-		.then(fish => {
+		.then(fishs => {
 			const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
@@ -73,7 +77,7 @@ router.post('/', (req, res) => {
 })
 
 // edit route -> GET that takes us to the edit form view
-router.get('/:id/edit', (req, res) => {
+router.get('/edit/:id', (req, res) => {
 	const username = req.session.username
     const loggedIn = req.session.loggedIn
     const userId = req.session.userId
@@ -95,11 +99,11 @@ router.put('/:id', (req, res) => {
 	req.body.ready = req.body.ready === 'on' ? true : false
 	console.log('req.body after changing checkbox value', req.body)
 
-	Fish.findByIdAndUpdate(fishId, req.body, { new: true })
+	Fish.findById(id)
 		.then(fish => {
-			if (fruit.owner == req.session.userId) {
+			if (fish.owner == req.session.userId) {
                 // must return the results of this query
-                return fruit.updateOne(req.body)
+                return fish.updateOne(req.body)
             } else {
                 res.sendStatus(401)
             }
@@ -113,15 +117,16 @@ router.put('/:id', (req, res) => {
 
 // show route
 router.get('/:id', (req, res) => {
-	const fishId = req.params.id
-	Fish.findById(fishId)
+	const id = req.params.id
+	Fish.findById(id)
+		.populate("comments.author", "username")
 		.then(fish => {
-            const {username, loggedIn, userId} = req.session
-			res.render('fishs/show', { fish, username, loggedIn, userId })
-		})
-		.catch((err) => {
-			res.redirect(`/error?error=${error}`)
-		})
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+            
+            res.render('fishs/show', { fish, username, loggedIn, userId })
+        })
 })
 
 // delete route

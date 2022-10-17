@@ -12,7 +12,7 @@ const { Schema, model } = mongoose
 
 const fishSchema = new Schema({
 	name: { type: String, required: true},
-	bodyofwater: {type: String, required: true},
+	bodyOfWater: {type: String, required: true},
 	readyToCatch: {type: Boolean, required: true},
 	owner: {
 		type: Schema.Types.ObjectID,
