@@ -4,15 +4,16 @@
   <div class="container-sm">
     <form action="/users/login" method="POST">
       <fieldset>
-        <legend>Welcome Back, Please log in to continue</legend>
+        <legend>Welcome back, please log in and let's get fish'n</legend>
         <label class="form-label">Username:
         </label>
-        <input type="text" name="username" placeholder="username" class="form-control" required>
-        <label class="form-label">Password</label>
-        <input type="password" name="password" placeholder="enter password" class="form-control" required>
+        <input class="form-control" name="username" type="text" placeholder="username" required>
+        <label class="form-label">Password:
+        </label>
+        <input class="form-control" name="password" type="password" placeholder="enter password" required>
       </fieldset>
-      <input type="submit" value="Log In" class="btn btn-success">
+      <input class="btn btn-outline-success" type="submit" value="Log In">
     </form>
   </div>
 
-{% endblock %}}
+{% endblock %}}}}

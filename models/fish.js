@@ -11,9 +11,9 @@ const commentSchema = require('./comment')
 const { Schema, model } = mongoose
 
 const fishSchema = new Schema({
-	name: String,
-	water: String,
-	readyToCatch: Boolean,
+	name: { type: String, required: true},
+	bodyofwater: {type: String, required: true},
+	readyToCatch: {type: Boolean, required: true},
 	owner: {
 		type: Schema.Types.ObjectID,
 		ref: 'User',

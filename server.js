@@ -3,6 +3,7 @@
 ////////////////////
 require("dotenv").config() // make env variables available
 const express = require("express")
+
 const middleware = require('./utils/middleware')
 const FishRouter = require('./controllers/fish')
 const UserRouter = require('./controllers/user')
@@ -35,6 +36,13 @@ middleware(app)
 // here is where we register our routes, this is how server.js knows to send the appropriate request to the appropriate route and send the correct response
 // app.use, when we register a route, needs two arguments
 // the first, is the base url endpoint, the second is the file to use
+app.get("/", (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/fishs')
+    } else {
+        res.render('index.liquid')
+    }
+})
 
 app.use('/fish', FishRouter)
 app.use('/users', UserRouter)

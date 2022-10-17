@@ -4,6 +4,7 @@
 const express = require('express')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const { auth } = require('./middleware')
 
 ////////////////////////////////////////////
 // Create router
@@ -21,11 +22,14 @@ router.get('/signup', (req, res) => {
 
 // POST to send the signup info
 router.post('/signup', async (req, res) => {
+	console.log('this is our initial req.body', req.body)
 	// set the password to hashed password
   req.body.password = await bcrypt.hash(
 		req.body.password,
 		await bcrypt.genSalt(10)
 	)
+	console.log('req.body after hash', req.body)
+
 	// create a new user
 	User.create(req.body)
 		// if created successfully redirect to login
@@ -52,7 +56,7 @@ router.post('/login', async (req, res) => {
 	
 	const { username, password } = req.body
 	// then we search for the user
-	User.findOne({ username: username })
+	User.findOne({ username })
 		.then(async (user) => {
 			// check if the user exists
 			if (user) {
@@ -64,11 +68,9 @@ router.post('/login', async (req, res) => {
 					console.log('the user', user);
 					
 					// store some properties in the session
-					req.session.username = user.username
+					req.session.username = username
 					req.session.loggedIn = true
 					req.session.userId = user.id
-
-          			const { username, loggedIn, userId } = req.session
 
 					console.log('session user id', req.session.userId)
 					// redirect to /examples if login is successful
@@ -92,7 +94,17 @@ router.post('/login', async (req, res) => {
 
 // logout route -> destroy the session
 router.get('/logout', (req, res) => {
+	const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+
+    res.render('users/logout', { username, loggedIn, userId})
+
 	req.session.destroy(() => {
+		console.log('req.session after logout', req.session)
+        console.log('err on logout?', err)
+		
+		// res.sendStatus(204)
 		res.redirect('/')
 	})
 })

@@ -24,15 +24,15 @@ router.use((req, res, next) => {
 // index ALL
 router.get('/', (req, res) => {
 	Fish.find({})
+	.populate("comments.author", "username")
 		.then(fish => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
+			const userId = req.session.userId
 			
-			res.render('fishs/index', { fish, username, loggedIn })
+			res.render('fishs/index', { fish, username, loggedIn, userId })
 		})
-		.catch(error => {
-			res.redirect(`/error?error=${error}`)
-		})
+		.catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // index that shows only the user's examples
@@ -40,7 +40,7 @@ router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
 	Fish.find({ owner: userId })
-		.then(examples => {
+		.then(fishs => {
 			res.render('fishs/index', { fish, username, loggedIn })
 		})
 		.catch(error => {
@@ -51,7 +51,7 @@ router.get('/mine', (req, res) => {
 // new route -> GET route that renders our page with the form
 router.get('/new', (req, res) => {
 	const { username, userId, loggedIn } = req.session
-	res.render('fishs/new', { username, loggedIn })
+	res.render('fishs/new', { username, loggedIn, userId })
 })
 
 // create -> POST route that actually calls the db and makes a new document
@@ -59,10 +59,13 @@ router.post('/', (req, res) => {
 	req.body.ready = req.body.ready === 'on' ? true : false
 
 	req.body.owner = req.session.userId
-	Example.create(req.body)
-		.then(example => {
-			console.log('this was returned from create', fish)
-			res.redirect('/fishs')
+	console.log('this was returned from create', fish)
+	Fish.create(req.body)
+		.then(fish => {
+			const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
+			res.redirect('fishs/index')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -71,11 +74,14 @@ router.post('/', (req, res) => {
 
 // edit route -> GET that takes us to the edit form view
 router.get('/:id/edit', (req, res) => {
+	const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
 	// we need to get the id
-	const exampleId = req.params.id
-	Example.findById(fishId)
-		.then(example => {
-			res.render('examples/edit', { fish })
+	const fishId = req.params.id
+	Fish.findById(fishId)
+		.then(fish => {
+			res.render('fishs/edit', { fish, username, loggedIn, userId })
 		})
 		.catch((error) => {
 			res.redirect(`/error?error=${error}`)
@@ -84,37 +90,46 @@ router.get('/:id/edit', (req, res) => {
 
 // update route
 router.put('/:id', (req, res) => {
-	const exampleId = req.params.id
+	console.log("req.body initially", req.body)
+	const fishId = req.params.id
 	req.body.ready = req.body.ready === 'on' ? true : false
+	console.log('req.body after changing checkbox value', req.body)
 
-	Example.findByIdAndUpdate(fishId, req.body, { new: true })
-		.then(example => {
-			res.redirect(`/fishs/${fish.id}`)
-		})
-		.catch((error) => {
-			res.redirect(`/error?error=${error}`)
-		})
+	Fish.findByIdAndUpdate(fishId, req.body, { new: true })
+		.then(fish => {
+			if (fruit.owner == req.session.userId) {
+                // must return the results of this query
+                return fruit.updateOne(req.body)
+            } else {
+                res.sendStatus(401)
+            }
+        })
+		.then(() => {
+            // console.log('returned from update promise', data)
+            res.redirect(`/fishs/${id}`)
+        })
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // show route
 router.get('/:id', (req, res) => {
-	const exampleId = req.params.id
-	Example.findById(exampleId)
-		.then(example => {
+	const fishId = req.params.id
+	Fish.findById(fishId)
+		.then(fish => {
             const {username, loggedIn, userId} = req.session
 			res.render('fishs/show', { fish, username, loggedIn, userId })
 		})
-		.catch((error) => {
+		.catch((err) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
 
 // delete route
 router.delete('/:id', (req, res) => {
-	const exampleId = req.params.id
-	Example.findByIdAndRemove(exampleId)
-		.then(example => {
-			res.redirect('/examples')
+	const fishId = req.params.id
+	Fish.findByIdAndRemove(fishId)
+		.then(fish => {
+			res.redirect('/fishs')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)

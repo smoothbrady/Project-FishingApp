@@ -11,7 +11,7 @@ const db = mongoose.connection
 
 db.on('open', () => {
     // Bringing in the array for fishes
-    const startFish = [
+    const startFishs = [
         {name: "Tarpon", BodyOfWater: "Freshwater", readyToCatch: false},
         {name: "Snook", BodyOfWater: "Euryhaline", readyToCatch: false},
         {name: "Redfish", BodyOfWater: "Saltwater", readyToCatch: false},
@@ -24,11 +24,11 @@ db.on('open', () => {
         {name: "Bonnethead Shark", BodyOfWater: "Salt-water", readyToCatch: false},
     ]
 
-    Fish.deleteMany({})
-        .then(deletedFish => {
-            console.log('this is what .delteMany returns', deletedFish)
+     Fish.deleteMany({})
+         .then(deletedFishs => {
+             console.log('this is what .delteMany returns', deletedFishs)
 
-            Fish.create(startFish)
+            Fish.create(startFishs)
             .then(data => {
                 console.log('new created fish', data)
                 db.close()
@@ -37,8 +37,8 @@ db.on('open', () => {
                 db.close()
             })
         })
-        .catch(error => {
-            console.log(error)
-            db.close()
-        })
-})
+         .catch(error => {
+             console.log(error)
+             db.close()
+         })
+ })
