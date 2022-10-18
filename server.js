@@ -25,19 +25,19 @@ const app = require("liquid-express-views")(express())
 middleware(app)
 
 
+app.get("/", (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/fishs')
+    } else {
+        res.render('index.liquid')
+    }
+})
 /////////////////////////////////////////////
 // Register our Routes
 /////////////////////////////////////////////
 // here is where we register our routes, this is how server.js knows to send the appropriate request to the appropriate route and send the correct response
 // app.use, when we register a route, needs two arguments
 // the first, is the base url endpoint, the second is the file to use
-// app.get("/", (req, res) => {
-//     if (req.session.loggedIn) {
-//         res.redirect('/fishs')
-//     } else {
-//         res.render('index.liquid')
-//     }
-// })
 
 app.use('/fish', FishRouter)
 app.use('/users', UserRouter)
@@ -67,6 +67,7 @@ app.all('*', (req, res) => {
 //////////////////////////////
 //      App Listener        //
 //////////////////////////////
+const PORT = process.env.PORT
 app.listen(process.env.PORT, () => {
     console.log(`listening on port ${process.env.PORT}`)
 })

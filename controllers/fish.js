@@ -24,12 +24,13 @@ router.use((req, res, next) => {
 // index ALL
 router.get('/', (req, res) => {
 	Fish.find({})
-	.populate("comments.author", "username")
+		.populate("comments.author", "username")
 		.then(fish => {
 			const username = req.session.username
 			const loggedIn = req.session.loggedIn
 			const userId = req.session.userId
-			
+			console.log(fish)
+
 			res.render('fishs/index', { fish, username, loggedIn, userId })
 		})
 		.catch(err => res.redirect(`/error?error=${err}`))
@@ -60,16 +61,15 @@ router.get('/new', (req, res) => {
 
 // create -> POST route that actually calls the db and makes a new document
 router.post('/', (req, res) => {
-	req.body.ready = req.body.ready === 'on' ? true : false
+	req.body.readyToCatch = req.body.readyToCatch === 'on' ? true : false
 
 	req.body.owner = req.session.userId
-	console.log('this was returned from create', fish)
 	Fish.create(req.body)
 		.then(fishs => {
 			const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
-			res.redirect('fishs/index')
+			res.redirect('/fish')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -115,31 +115,32 @@ router.put('/:id', (req, res) => {
         .catch(err => res.redirect(`/error?error=${err}`))
 })
 
+
+// delete route
+router.delete('/:id', (req, res) => {
+	const fishId = req.params.id
+	Fish.findByIdAndRemove(fishId)
+	.then(fish => {
+		res.redirect('/fish')
+	})
+	.catch(error => {
+		res.redirect(`/error?error=${error}`)
+	})
+})
+
 // show route
 router.get('/:id', (req, res) => {
 	const id = req.params.id
 	Fish.findById(id)
 		.populate("comments.author", "username")
 		.then(fish => {
-            const username = req.session.username
-            const loggedIn = req.session.loggedIn
-            const userId = req.session.userId
-            
-            res.render('fishs/show', { fish, username, loggedIn, userId })
-        })
-})
-
-// delete route
-router.delete('/:id', (req, res) => {
-	const fishId = req.params.id
-	Fish.findByIdAndRemove(fishId)
-		.then(fish => {
-			res.redirect('/fishs')
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
+			const userId = req.session.userId
+			
+			res.render('fishs/show', { fish, username, loggedIn, userId })
 		})
-		.catch(error => {
-			res.redirect(`/error?error=${error}`)
-		})
+		.catch(err => res.redirect(`/error?error=${err}`))
 })
-
 // Export the Router
 module.exports = router

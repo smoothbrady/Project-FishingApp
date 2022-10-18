@@ -32,6 +32,7 @@ router.post("/:fishId", (req, res) => {
 
 // Delete comment
 router.delete('/delete/:fishId/:commId', (req, res) => {
+    console.log("deleteroute")
     const fishId = req.params.fishId 
     const commId = req.params.commId
     Fish.findById(fishId)
@@ -43,7 +44,7 @@ router.delete('/delete/:fishId/:commId', (req, res) => {
                     // find some way to remove the comment
                     theComment.remove()
                     fish.save()
-                    res.redirect(`/fishs/${fish.id}`)
+                    res.redirect(`/fish/${fish.id}`)
                     // return the saved fish
                 } else {
                     const err = 'you%20are%20not%20authorized%20for%20this%20action'

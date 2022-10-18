@@ -7,30 +7,27 @@
        <div class="card h-100">
             <div class="row" id="fishCardIndex">
                 {% for oneFish in fish %}
-                {{ oneFish }}
                 <div class="card" style="width: 20rem;">
-                    <h5 class="card-header">{{fish.name}}
+                    <h5 class="card-header">{{oneFish.name}}
                     </h5>
                     <img src="..." class="card-img-top" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">
-                            {% if fish.readyToCatch %}
-                            Hungry
-                            {% else %}
-                            Not Hungry
+                            {% if oneFish.readyToCatch %}
+                            Safe To Catch
                             {% endif %}
                         </h5>
                         <p class="card-text">The body of water of this
-                            {{fish.name}}
+                            {{oneFish.name}}
                             is
-                            {{fish.bodyofwater}}
+                            {{oneFish.bodyOfWater}}
                         </p>
                         </div>
                     </div>
-                    <div class="colorBox" style="background-color: {{fish.color}}"></div>
-                    <a class="btn btn-outline-info" href="/fishs/{{fish.id}}">
+                    <div class="colorBox" style="background-color: {{oneFish.color}}"></div>
+                    <a class="btn btn-info" href="/fish/{{oneFish.id}}">
                         View
-                        {{fish.name}}
+                        {{oneFish.name}}
                     </a>
                     </div>
                 </div>

@@ -12,16 +12,16 @@ const db = mongoose.connection
 db.on('open', () => {
     // Bringing in the array for fishes
     const startFishs = [
-        {name: "Tarpon", bodyOfWater: "Freshwater", readyToCatch: false},
-        {name: "Snook", bodyOfWater: "Euryhaline", readyToCatch: false},
-        {name: "Redfish", bodyOfWater: "Saltwater", readyToCatch: false},
-        {name: "Speckled Trout", bodyOfWater: "Salt-water", readyToCatch: false},
-        {name: "Florida Largemouth Bass", bodyOfWater: "Freshwater", readyToCatch: false},
-        {name: "Sheepshead", bodyOfWater: "Salt-water", readyToCatch: false},
-        {name: "Kingfish", bodyOfWater: "Salt-water", readyToCatch: false},
-        {name: "Gulf Flounder", bodyOfWater: "Salt-water", readyToCatch: false},
-        {name: "Goliath Grouper", bodyOfWater: "Salt-water", readyToCatch: false},
-        {name: "Bonnethead Shark", bodyOfWater: "Salt-water", readyToCatch: false}
+        {name: "Tarpon", bodyOfWater: "Freshwater", readyToCatch: true},
+        {name: "Snook", bodyOfWater: "Euryhaline", readyToCatch: true},
+        {name: "Redfish", bodyOfWater: "Saltwater", readyToCatch: true},
+        {name: "Speckled Trout", bodyOfWater: "Salt-water", readyToCatch: true},
+        {name: "Florida Largemouth Bass", bodyOfWater: "Freshwater", readyToCatch: true},
+        {name: "Sheepshead", bodyOfWater: "Salt-water", readyToCatch: true},
+        {name: "Kingfish", bodyOfWater: "Salt-water", readyToCatch: true},
+        {name: "Gulf Flounder", bodyOfWater: "Salt-water", readyToCatch: true},
+        {name: "Goliath Grouper", bodyOfWater: "Salt-water", readyToCatch: true},
+        {name: "Bonnethead Shark", bodyOfWater: "Salt-water", readyToCatch: true}
     ]
 
      Fish.deleteMany({owner: null})

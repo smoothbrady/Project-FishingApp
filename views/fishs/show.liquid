@@ -6,16 +6,16 @@
     </h2>
     <h4>
       {% if fish.readyToCatch %}
-        Hungry and Ready
+        Safe To Catch
       {% else %}
-        Not Hungry, Not ready
+        Not Safe To Catch
       {% endif %}
     </h4>
     <h4>The body of water the fish live in:
-      {{fish.bodyofwater}}
+      {{fish.bodyOfWater}}
     </h4>
-    <div class="colorBox" style="background-color: {{fish.bodyofwater}}"></div>
-    {% if fruit.owner == userId %}
+    <div class="colorBox" style="background-color: {{fish.bodyOfWater}}"></div>
+    {% if fish.owner == userId %}
       <div class="btn-group">
         {%- comment -%}
           first button will send us to the edit page
@@ -24,7 +24,7 @@
         {%- comment -%}
           the second button(which will actually be a form, will send a DELETE request)
         {%- endcomment -%}
-        <form action="/fishs/{{fish.id}}?_method=DELETE" method="POST">
+        <form action="/fish/{{fish.id}}?_method=DELETE" method="POST">
           <input class="btn btn-outline-danger" type="submit" value="Delete">
         </form>
       </div>
@@ -35,9 +35,9 @@
   <hr>
   {% if loggedIn %}
     <div class="col-md-6">
-      <form action="/comments/{{fish.id}}" method="POST">
+      <form action="/comment/{{fish.id}}" method="POST">
         <fieldset>
-          <legend>Add comment or Review</legend>
+          <legend>Add comment or fun fact!</legend>
           <label class="form-label">comment:</label>
           <input class="form-control mb-1" type="text" placeholder="enter your comment..." name="note" required>
         </fieldset>
@@ -61,4 +61,6 @@
   {% else %}
     <small>have not commented yet...</small>
   {% endif %}
-</div>>>
+</div>
+
+{% endblock %}}
