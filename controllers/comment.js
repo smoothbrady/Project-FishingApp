@@ -11,6 +11,7 @@ const router = express.Router()
 // Routes
 ////////////////////////////////////////////
 // POST comment
+// Nit: choose either double or single quotes
 router.post("/:fishId", (req, res) => {
     const fishId = req.params.fishId
 
@@ -32,12 +33,14 @@ router.post("/:fishId", (req, res) => {
 
 // Delete comment
 router.delete('/delete/:fishId/:commId', (req, res) => {
+    // Nit: remove console.logs
     console.log("deleteroute")
     const fishId = req.params.fishId 
     const commId = req.params.commId
     Fish.findById(fishId)
         .then(fish => {
             const theComment = fish.comments.id(commId)
+            // Nit: remove console.logs
             console.log('this is the comment that was found', theComment)
             if (req.session.loggedIn) {
                 if (theComment.author == req.session.userId) {
