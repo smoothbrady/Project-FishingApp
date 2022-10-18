@@ -1,6 +1,7 @@
 ////////////////////
 //  Dependencies  //
 ////////////////////
+// Nit: choose either double or single quotes
 require("dotenv").config() // make env variables available
 const express = require("express")
 
@@ -9,6 +10,7 @@ const FishRouter = require('./controllers/fish')
 const UserRouter = require('./controllers/user')
 const CommentRouter = require('./controllers/comment')
 // const WeatherRouter = require('./controllers/weather')
+// Nit: remove unused Path
 const Path = require("path")
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
@@ -67,6 +69,7 @@ app.all('*', (req, res) => {
 //////////////////////////////
 //      App Listener        //
 //////////////////////////////
+// Nit: either remove this const PORT or use it
 const PORT = process.env.PORT
 app.listen(process.env.PORT, () => {
     console.log(`listening on port ${process.env.PORT}`)
